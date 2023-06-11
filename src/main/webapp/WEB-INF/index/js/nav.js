@@ -10,13 +10,13 @@
 					<a href="#" class="nav-link active" aria-current="page"></a>
 				</li>
 				<li id="edit" class="nav-item">
-					<a href="${getContextPath()}/member/edit.html" class="nav-link active" aria-current="page">編輯會員資訊</a>
+					<a href="${getContextPath()}/login/edit.html" class="nav-link active" aria-current="page">編輯會員資訊</a>
 				</li>
                 <li id="manage" class="nav-item">
-					<a href="${getContextPath()}/member/manage" class="nav-link active" aria-current="page">會員管理</a>
+					<a href="${getContextPath()}/login/manage" class="nav-link active" aria-current="page">會員管理</a>
 				</li>
 				<li id="login" class="nav-item">
-					<a href="${getContextPath()}/member/login.html" class="nav-link active" aria-current="page">登入/註冊</a>
+					<a href="${getContextPath()}/login/login.html" class="nav-link active" aria-current="page">登入/註冊</a>
 				</li>
 				<li id="logout" class="nav-item">
 					<a href="#" class="nav-link active" aria-current="page">登出</a>
@@ -31,20 +31,20 @@
     const body = document.querySelector('body');
     body.insertBefore(nav, body.firstChild);
 
-    const nickname = sessionStorage.getItem('nickname');
-    const roleId = sessionStorage.getItem('roleId');
+    const memberAccount = sessionStorage.getItem('memberAccount');
+    const memberNo = sessionStorage.getItem('memberNo');
     const register = document.querySelector('#register');
     const edit = document.querySelector('#edit');
     const manage = document.querySelector('#manage');
     const login = document.querySelector('#login');
     const logout = document.querySelector('#logout');
-    if (nickname) {
+    if (memberAccount) {
         register.classList.add('hide');
         edit.classList.remove('hide');
-        roleId == 1 ? manage.classList.remove('hide') : manage.classList.add('hide');
+        memberNo == 1 ? manage.classList.remove('hide') : manage.classList.add('hide');
         login.classList.add('hide');
         logout.classList.remove('hide');
-        document.querySelector('#currentUser').textContent = nickname;
+        document.querySelector('#currentUser').textContent = memberAccount;
     } else {
         register.classList.remove('hide');
         edit.classList.add('hide');
@@ -54,9 +54,9 @@
     }
 
     logout.addEventListener('click', () => {
-        sessionStorage.removeItem('nickname');
+        sessionStorage.removeItem('memberAccount');
         fetch('member/logout');
-        location = `../../index.html`;
+        location = `${getContextPath()}/index.html`;
     });
 
     function getContextPath() {

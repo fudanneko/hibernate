@@ -5,9 +5,9 @@
     const memberPassword = document.querySelector('#memberPassword');
     const confirmPassword = document.querySelector('#confirmPassword');
     const memberName = document.querySelector('#memberName');
-    const memberPhone =document.querySelector('#memberPhone');
-    const memberEmail=document.querySelector('#memberEmail');
-    const email_verification=document.querySelector('#email_verification')
+    const memberPhone = document.querySelector('#memberPhone');
+    const memberEmail = document.querySelector('#memberEmail');
+    const email_verification = document.querySelector('#email_verification')
     const inputs = document.querySelectorAll('input');
     console.log("網頁啟動");
 
@@ -20,15 +20,15 @@
             msg.textContent = '姓名長度須介於1~20字元';
             return;
         }
-        const phoneValue=memberPhone.value;
-        const phonePattern=/^09\d{8}$/;
-        if(!phonePattern.test(phoneValue)){
+        const phoneValue = memberPhone.value;
+        const phonePattern = /^09\d{8}$/;
+        if (!phonePattern.test(phoneValue)) {
             msg.textContent = '電話號碼須為09開頭，且為十碼'
             return;
         }
-        const emailValue=memberEmail.value;
-        const emailPattern=/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
-        if(!emailPattern.test(emailValue)){
+        const emailValue = memberEmail.value;
+        const emailPattern = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+        if (!emailPattern.test(emailValue)) {
             msg.textContent = '請輸入電子信箱格式'
             return;
         }
@@ -49,23 +49,33 @@
             return;
 
         }
-
-
-        // addmember();
+        console.log(memberAccount2.value);
+        console.log(memberPassword.value);
+        console.log(confirmPassword.value);
+        console.log(memberName.value);
+        console.log(memberPhone.value);
+        console.log(memberEmail.value);
+        msg.textContent = '';
         fetch('register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                username: username.value,
-                password: password.value,
-                nickname: nickname.value,
+                memberAccount: memberAccount2.value,
+                memberPassword: memberPassword.value,
+                memberName: memberName.value,
+                memberPhone: memberPhone.value,
+                memberEmail: memberEmail.value,
             }),
         })
-            .then(resp => resp.json())
+            .then(function (resp) {
+                resp.json();
+                console.log(resp.json())
+            })
             .then(body => {
-                const { successful } = body;
+                console.log(body);
+                const {successful} = body;//const successful = body.successful;
                 if (successful) {
                     for (let input of inputs) {
                         input.disabled = true;
@@ -103,8 +113,7 @@
         }
         //-----------打包資料(end)
         //---------------------------------送出Ajax請求
-        $.ajax({
-            url: "",
+        $.ajax('login', {
             method: "post",
             contentType: "application/json",
             data: JSON.stringify(datas),
@@ -112,7 +121,7 @@
             success(response) {
                 if (response.indexOf("success") !== -1) {
                     alert("新增成功~");
-                    clearForm();
+                    // clearForm();
                 }
             },
             error(xhr, status, error) {

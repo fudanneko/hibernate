@@ -5,7 +5,7 @@ import web.member.pojo.MemberData;
 
 public interface MemberDataDao extends CoreDao<MemberData, Integer> {
 	
-//	MemberData selectByUsername(String username);
+	MemberData selectBymemberAccount(String memberAccount);
 	
 	MemberData selectForLogin(String username, String password);
 }

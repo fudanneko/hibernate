@@ -13,7 +13,7 @@ public interface CoreDao<P, I> {
 
 	int deleteById(I id);
 
-	int updateById(P pojo);
+	int update(P pojo);
 
 	P selectById(I id);
 

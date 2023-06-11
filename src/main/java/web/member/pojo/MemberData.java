@@ -1,5 +1,6 @@
 package web.member.pojo;
 
+import core.pojo.Core;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,7 +12,7 @@ import java.time.Instant;
 @Setter
 @Entity
 @Table(name = "member_data")
-public class MemberData {
+public class MemberData extends Core {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "memberNo", nullable = false, insertable = false, updatable = false)

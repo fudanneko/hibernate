@@ -51,7 +51,9 @@ public class MemberDataDaoImpl implements MemberDataDao {
         } catch (HibernateException e) {
             session.getTransaction().rollback();
             e.printStackTrace();
+            return 0;
         }
+        System.out.println("完成insert");
         return 1;
     }
 
@@ -83,12 +85,13 @@ public class MemberDataDaoImpl implements MemberDataDao {
         } catch (HibernateException e) {
             session.getTransaction().rollback();
             e.printStackTrace();
+            return 0;
         }
         return 1;
     }
 
     @Override
-    public int updateById(MemberData memberdata) {
+    public int update(MemberData memberdata) {
 //         ====Hibernate  update寫法====
         Session session = getSession();
         try {
@@ -101,6 +104,7 @@ public class MemberDataDaoImpl implements MemberDataDao {
         } catch (HibernateException e) {
             session.getTransaction().rollback();
             e.printStackTrace();
+            return 0;
         }
         return 1;
 
@@ -318,8 +322,22 @@ public class MemberDataDaoImpl implements MemberDataDao {
 
 
 
-//    @Override
-//    public MemberData selectByUsername(String username) {
+    @Override
+    public MemberData selectBymemberAccount(String memberAccount) {
+
+        //		====Hibernate寫法====
+        Session session=getSession();
+        try {
+            Transaction transaction = session.beginTransaction();
+
+            Hibernate.initialize(MemberData.class);
+            transaction.commit();
+        } catch (HibernateException e) {
+            session.getTransaction().rollback();
+            e.printStackTrace();
+        }
+        return session.get(MemberData.class,memberAccount );
+
 //		sql語法
 //		final String sql = "select * from MEMBER where USERNAME = ?";
 //		try (
@@ -353,17 +371,25 @@ public class MemberDataDaoImpl implements MemberDataDao {
 //        CriteriaBuilder cBuilder = session.getCriteriaBuilder();
 //        CriteriaQuery<MemberData> cQuery = cBuilder.createQuery(MemberData.class);
 //        Root<MemberData> root = cQuery.from(MemberData.class);
-//        cQuery.where(cBuilder.equal(root.get("username"), username));
+//        cQuery.where(cBuilder.equal(root.get("memberAccount"), memberAccount));
 //        return session
 //                .createQuery(cQuery)
 //                .uniqueResult();
-//		final String sql = "select * from MEMBER where USERNAME= ?";
+//		final String sql = "select * from MEMBERdata where memberAccount= ?";
 
-//    }
+    }
 
 
     @Override
-    public MemberData selectForLogin(String username, String password) {
+    public MemberData selectForLogin(String memberAccount, String memberPassword) {
+//		Native SQL 寫法
+        final String sql = "select * from MEMBERdata where memberAccount = :memberAccount and memberPassword = :memberPassword";
+        return getSession()
+                .createNativeQuery(sql, MemberData.class)
+                .setParameter("memberAccount", memberAccount)
+                .setParameter("memberPassword", memberPassword)
+                .uniqueResult();
+
 //		sql寫法
 //		final String sql = "select * from MEMBER where USERNAME = ? and PASSWORD = ?";
 //		try (
@@ -393,13 +419,6 @@ public class MemberDataDaoImpl implements MemberDataDao {
 //		}
 //		return null;
 
-//		Native SQL 寫法
-        final String sql = "select * from MEMBER where USERNAME = :username and PASSWORD = :password";
-        return getSession()
-                .createNativeQuery(sql, MemberData.class)
-                .setParameter("username", username)
-                .setParameter("password", password)
-                .uniqueResult();
     }
 
 
