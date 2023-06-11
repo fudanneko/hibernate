@@ -9,7 +9,7 @@
 <!--		 <property name="hibernate.connection.username">root</property>-->
 <!--		 <property name="hibernate.connection.password">aa1234</property>-->
 
-		<property name="hibernate.connection.datasource">java:comp/env/jdbc/jamigo</property>
+		<property name="hibernate.connection.datasource">java:comp/env/jdbc/hibernate</property>
 
 		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
 		<property name="hibernate.show_sql">true</property>

@@ -9,5 +9,8 @@
         <module name="hibernate" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="hibernate-exercise" target="11" />
+    </bytecodeTargetLevel>
   </component>
 </project>
