@@ -9,7 +9,7 @@
     const memberEmail = document.querySelector('#memberEmail');
     const email_verification = document.querySelector('#email_verification')
     const inputs = document.querySelectorAll('input');
-    console.log("網頁啟動");
+    console.log("register.js啟動");
 
     btn2.addEventListener('click', () => {
         // 前端確認資料填寫

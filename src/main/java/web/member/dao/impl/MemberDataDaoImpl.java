@@ -44,7 +44,7 @@ public class MemberDataDaoImpl implements MemberDataDao {
 //        try {
 //            Transaction transaction = session.beginTransaction();
 
-            session.persist(memberdata);
+        session.persist(memberdata);
 
 //            Hibernate.initialize(MemberData.class);
 //            transaction.commit();
@@ -77,8 +77,8 @@ public class MemberDataDaoImpl implements MemberDataDao {
 //        try {
 //            Transaction transaction = session.beginTransaction();
 //
-            MemberData member = session.get(MemberData.class, memberNo);
-            session.remove(member);
+        MemberData member = session.get(MemberData.class, memberNo);
+        session.remove(member);
 
 //            Hibernate.initialize(MemberData.class);
 //            transaction.commit();
@@ -97,7 +97,7 @@ public class MemberDataDaoImpl implements MemberDataDao {
 //        try {
 //            Transaction transaction = session.beginTransaction();
 //
-            session.update(memberdata);
+        session.update(memberdata);
 
 //            Hibernate.initialize(MemberData.class);
 //            transaction.commit();
@@ -122,7 +122,6 @@ public class MemberDataDaoImpl implements MemberDataDao {
 //        member.setMemberPic(memberdata.getMemberPic());
 //        member.setMemberCard(memberdata.getMemberCard());
 //        return 1;
-
 
 
 //		sql寫法
@@ -264,18 +263,18 @@ public class MemberDataDaoImpl implements MemberDataDao {
     }
 
     @Override
-        public List<MemberData> selectAll() {
+    public List<MemberData> selectAll() {
 
-            //		====Hibernate寫法====
-            Session session=getSession();
+        //		====Hibernate寫法====
+        Session session = getSession();
 
-        List<MemberData> result= null;
+        List<MemberData> result = null;
 //        try {
 //            Transaction transaction = session.beginTransaction();
-            String hql = " from MemberData order by memberNo";
-            Query<MemberData> query = session.createQuery(hql, MemberData.class);
+        String hql = " from MemberData order by memberNo";
+        Query<MemberData> query = session.createQuery(hql, MemberData.class);
 //            System.out.println(query);
-            result = query.list();
+        result = query.list();
 //            System.out.println(result);
 //            Hibernate.initialize(MemberData.class);
 //            transaction.commit();
@@ -321,7 +320,6 @@ public class MemberDataDaoImpl implements MemberDataDao {
     }
 
 
-
     @Override
     public MemberData selectBymemberAccount(String memberAccount) {
 
@@ -357,7 +355,6 @@ public class MemberDataDaoImpl implements MemberDataDao {
 //			e.printStackTrace();
 //		}
 //		return null;
-
 //		Criteria語法
         Session session = getSession();
         CriteriaBuilder cBuilder = session.getCriteriaBuilder();
@@ -375,7 +372,7 @@ public class MemberDataDaoImpl implements MemberDataDao {
     @Override
     public MemberData selectForLogin(String memberAccount, String memberPassword) {
 //		Native SQL 寫法
-        final String sql = "select * from MEMBERdata where memberAccount = :memberAccount and memberPassword = :memberPassword";
+        final String sql = "select * from jamigo.member_data where memberAccount = :memberAccount and memberPassword = :memberPassword";
         return getSession()
                 .createNativeQuery(sql, MemberData.class)
                 .setParameter("memberAccount", memberAccount)
