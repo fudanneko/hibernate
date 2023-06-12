@@ -49,12 +49,7 @@
             return;
 
         }
-        console.log(memberAccount2.value);
-        console.log(memberPassword.value);
-        console.log(confirmPassword.value);
-        console.log(memberName.value);
-        console.log(memberPhone.value);
-        console.log(memberEmail.value);
+
         msg.textContent = '';
         fetch('register', {
             method: 'POST',
@@ -69,18 +64,16 @@
                 memberEmail: memberEmail.value,
             }),
         })
-            .then(function (resp) {
-                resp.json();
-                console.log(resp.json())
-            })
+            .then(resp => resp.json())// .then(function (resp) {resp.json();)})
             .then(body => {
                 console.log(body);
                 const {successful} = body;//const successful = body.successful;
+                const {memberAccount} =body;
                 if (successful) {
                     for (let input of inputs) {
                         input.disabled = true;
                     }
-                    btn1.disabled = true;
+                    btn2.disabled = true;
                     msg.className = 'info';
                     msg.textContent = '註冊成功';
                 } else {
@@ -91,46 +84,46 @@
 
     });
 
-    function addmember() {
-        //-----------打包資料(start)
-        let datas = {
-            // memberNo: parseInt($id("memberNo").value),
-            memberAccount: $id("memberAccount2").value,
-            memberName: $id("memberName").value,
-            memberGender: parseInt($id("memberGender").value),
-            memberPassword: $id("memberPassword").value,
-            memberPhone: $id("memberPhone").value,
-            memberEmail: $id("memberEmail").value
-            // memberAddress: $id("memberAddress").value,
-            // memberJoinTime: $id("memberJoinTime").value,
-            // levelNo: parseInt($id("levelNo").value),
-            // memberBirthday: $id("memberBirthday").value,
-            // memberNation: $id("memberNation").value,
-            // memberPic: $id("memberPic").value,
-            // memberCard: $id("memberCard").value,
-            // memberPoints: $id("memberPoints").value,
-            // memberStat: parseInt($id("memberStat").value),
-        }
-        //-----------打包資料(end)
-        //---------------------------------送出Ajax請求
-        $.ajax('login', {
-            method: "post",
-            contentType: "application/json",
-            data: JSON.stringify(datas),
-            dataType: "text",
-            success(response) {
-                if (response.indexOf("success") !== -1) {
-                    alert("新增成功~");
-                    // clearForm();
-                }
-            },
-            error(xhr, status, error) {
-                console.log("status : ", status);
-                cons
-                ole.log("error : ", error);
-            }
-        });
-
-    };
+    // function addmember() {
+    //     //-----------打包資料(start)
+    //     let datas = {
+    //         // memberNo: parseInt($id("memberNo").value),
+    //         memberAccount: $id("memberAccount2").value,
+    //         memberName: $id("memberName").value,
+    //         memberGender: parseInt($id("memberGender").value),
+    //         memberPassword: $id("memberPassword").value,
+    //         memberPhone: $id("memberPhone").value,
+    //         memberEmail: $id("memberEmail").value
+    //         // memberAddress: $id("memberAddress").value,
+    //         // memberJoinTime: $id("memberJoinTime").value,
+    //         // levelNo: parseInt($id("levelNo").value),
+    //         // memberBirthday: $id("memberBirthday").value,
+    //         // memberNation: $id("memberNation").value,
+    //         // memberPic: $id("memberPic").value,
+    //         // memberCard: $id("memberCard").value,
+    //         // memberPoints: $id("memberPoints").value,
+    //         // memberStat: parseInt($id("memberStat").value),
+    //     }
+    //     //-----------打包資料(end)
+    //     //---------------------------------送出Ajax請求
+    //     $.ajax('login', {
+    //         method: "post",
+    //         contentType: "application/json",
+    //         data: JSON.stringify(datas),
+    //         dataType: "text",
+    //         success(response) {
+    //             if (response.indexOf("success") !== -1) {
+    //                 alert("新增成功~");
+    //                 // clearForm();
+    //             }
+    //         },
+    //         error(xhr, status, error) {
+    //             console.log("status : ", status);
+    //             cons
+    //             ole.log("error : ", error);
+    //         }
+    //     });
+    //
+    // };
 
 })();

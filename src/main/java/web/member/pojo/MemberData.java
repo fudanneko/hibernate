@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.time.Instant;
 
 @Getter
@@ -37,16 +38,16 @@ public class MemberData extends Core {
     private String memberEmail;
 
     @Builder.Default
-    @Column(name = "memberAddress", length = 100, insertable = false)
+    @Column(name = "memberAddress", length = 100)
     private String memberAddress = null;
 
-    @Builder.Default
+//    @Builder.Default
     @Column(name = "memberJoinTime", nullable = false, insertable = false, updatable = false)
-    private Instant memberJoinTime = Instant.now();
+    private Timestamp memberJoinTime;
 
     @Builder.Default
     @Column(name = "memberBirthday", insertable = false)
-    private Instant memberBirthday = null;
+    private Timestamp memberBirthday = null;
 
     @Builder.Default
     @Column(name = "memberNation", length = 10, insertable = false)

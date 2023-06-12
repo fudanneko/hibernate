@@ -41,18 +41,18 @@ public class MemberDataDaoImpl implements MemberDataDao {
 
 //		====Hibernate寫法====
         Session session = getSession();
-        try {
-            Transaction transaction = session.beginTransaction();
+//        try {
+//            Transaction transaction = session.beginTransaction();
 
             session.persist(memberdata);
 
-            Hibernate.initialize(MemberData.class);
-            transaction.commit();
-        } catch (HibernateException e) {
-            session.getTransaction().rollback();
-            e.printStackTrace();
-            return 0;
-        }
+//            Hibernate.initialize(MemberData.class);
+//            transaction.commit();
+//        } catch (HibernateException e) {
+//            session.getTransaction().rollback();
+//            e.printStackTrace();
+//            return 0;
+//        }
         System.out.println("完成insert");
         return 1;
     }
@@ -74,19 +74,19 @@ public class MemberDataDaoImpl implements MemberDataDao {
 
 //		====Hibernate寫法====
         Session session = getSession();
-        try {
-            Transaction transaction = session.beginTransaction();
+//        try {
+//            Transaction transaction = session.beginTransaction();
 //
             MemberData member = session.get(MemberData.class, memberNo);
             session.remove(member);
 
-            Hibernate.initialize(MemberData.class);
-            transaction.commit();
-        } catch (HibernateException e) {
-            session.getTransaction().rollback();
-            e.printStackTrace();
-            return 0;
-        }
+//            Hibernate.initialize(MemberData.class);
+//            transaction.commit();
+//        } catch (HibernateException e) {
+//            session.getTransaction().rollback();
+//            e.printStackTrace();
+//            return 0;
+//        }
         return 1;
     }
 
@@ -94,18 +94,18 @@ public class MemberDataDaoImpl implements MemberDataDao {
     public int update(MemberData memberdata) {
 //         ====Hibernate  update寫法====
         Session session = getSession();
-        try {
-            Transaction transaction = session.beginTransaction();
+//        try {
+//            Transaction transaction = session.beginTransaction();
 //
             session.update(memberdata);
 
-            Hibernate.initialize(MemberData.class);
-            transaction.commit();
-        } catch (HibernateException e) {
-            session.getTransaction().rollback();
-            e.printStackTrace();
-            return 0;
-        }
+//            Hibernate.initialize(MemberData.class);
+//            transaction.commit();
+//        } catch (HibernateException e) {
+//            session.getTransaction().rollback();
+//            e.printStackTrace();
+//            return 0;
+//        }
         return 1;
 
 //        ====Hibernate  Setter寫法====
@@ -221,15 +221,15 @@ public class MemberDataDaoImpl implements MemberDataDao {
 
 
         Session session = getSession();
-        try {
-            Transaction transaction = session.beginTransaction();
+//        try {
+//            Transaction transaction = session.beginTransaction();
 //
-            Hibernate.initialize(MemberData.class);
-            transaction.commit();
-        } catch (HibernateException e) {
-            session.getTransaction().rollback();
-            e.printStackTrace();
-        }
+//            Hibernate.initialize(MemberData.class);
+//            transaction.commit();
+//        } catch (HibernateException e) {
+//            session.getTransaction().rollback();
+//            e.printStackTrace();
+//        }
         return session.get(MemberData.class, memberNo);
 
 //		====JDBC寫法====
@@ -270,19 +270,19 @@ public class MemberDataDaoImpl implements MemberDataDao {
             Session session=getSession();
 
         List<MemberData> result= null;
-        try {
-            Transaction transaction = session.beginTransaction();
+//        try {
+//            Transaction transaction = session.beginTransaction();
             String hql = " from MemberData order by memberNo";
             Query<MemberData> query = session.createQuery(hql, MemberData.class);
 //            System.out.println(query);
             result = query.list();
 //            System.out.println(result);
-            Hibernate.initialize(MemberData.class);
-            transaction.commit();
-        } catch (HibernateException e) {
-            session.getTransaction().rollback();
-            e.printStackTrace();
-        }
+//            Hibernate.initialize(MemberData.class);
+//            transaction.commit();
+//        } catch (HibernateException e) {
+//            session.getTransaction().rollback();
+//            e.printStackTrace();
+//        }
         return result;
 //		sql寫法
 //		final String sql = "select * from MEMBERdata order by ID";
@@ -326,17 +326,9 @@ public class MemberDataDaoImpl implements MemberDataDao {
     public MemberData selectBymemberAccount(String memberAccount) {
 
         //		====Hibernate寫法====
-        Session session=getSession();
-        try {
-            Transaction transaction = session.beginTransaction();
-
-            Hibernate.initialize(MemberData.class);
-            transaction.commit();
-        } catch (HibernateException e) {
-            session.getTransaction().rollback();
-            e.printStackTrace();
-        }
-        return session.get(MemberData.class,memberAccount );
+//        Session session=getSession();
+//        return session.get(MemberData.class,memberAccount );
+//        !!!不能用此寫法 get只會查主鍵PK 不能查UK!!!
 
 //		sql語法
 //		final String sql = "select * from MEMBER where USERNAME = ?";
@@ -367,14 +359,14 @@ public class MemberDataDaoImpl implements MemberDataDao {
 //		return null;
 
 //		Criteria語法
-//        Session session = getSession();
-//        CriteriaBuilder cBuilder = session.getCriteriaBuilder();
-//        CriteriaQuery<MemberData> cQuery = cBuilder.createQuery(MemberData.class);
-//        Root<MemberData> root = cQuery.from(MemberData.class);
-//        cQuery.where(cBuilder.equal(root.get("memberAccount"), memberAccount));
-//        return session
-//                .createQuery(cQuery)
-//                .uniqueResult();
+        Session session = getSession();
+        CriteriaBuilder cBuilder = session.getCriteriaBuilder();
+        CriteriaQuery<MemberData> cQuery = cBuilder.createQuery(MemberData.class);
+        Root<MemberData> root = cQuery.from(MemberData.class);
+        cQuery.where(cBuilder.equal(root.get("memberAccount"), memberAccount));
+        return session
+                .createQuery(cQuery)
+                .uniqueResult();
 //		final String sql = "select * from MEMBERdata where memberAccount= ?";
 
     }

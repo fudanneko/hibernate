@@ -2,7 +2,11 @@ package core.util;
 
 //import static core.util.Constants.DATASOURCE;
 
-
+//
+//import javax.json.Json;
+//import javax.json.JsonObject;
+//import javax.json.JsonReader;
+//import javax.json.JsonWriter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
@@ -19,7 +23,6 @@ public class CommonUtil {
 //		}
 //		return DATASOURCE.getConnection();
 //	}
-
 
     public static <P> P json2Pojo(HttpServletRequest request, Class<P> classOfPojo) {
 
@@ -40,5 +43,28 @@ public class CommonUtil {
         }
     }
 
+//    public static <P> P json2Pojo(HttpServletRequest request, Class<P> classOfPojo) {
+//        try (JsonReader reader = Json.createReader(request.getReader())) {
+//            JsonObject jsonObject = reader.readObject();
+//            // 将JsonObject转换为POJO对象
+//            P pojo = memberdata// 执行将JsonObject转换为POJO的逻辑
+//            return pojo;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
+//
+//    public static <P> void writePojo2Json(HttpServletResponse response, P pojo) {
+//        response.setContentType("application/json");
+//        try (PrintWriter pw = response.getWriter()) {
+//            JsonWriter writer = Json.createWriter(pw);
+//            JsonObject jsonObject = // 将POJO对象转换为JsonObject的逻辑
+//                    writer.writeObject(jsonObject);
+//            writer.close();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 }
 

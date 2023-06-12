@@ -44,12 +44,12 @@ public class MemberServiceImpl implements MemberService {
 			memberData.setSuccessful(false);
 			return memberData;
 		}
-try {//
-	beginTransaction();//
+//try {//
+//	beginTransaction();//
 		if (dao.selectBymemberAccount(memberData.getMemberAccount()) != null) {
 			memberData.setMessage("帳號重複");
 			memberData.setSuccessful(false);
-			rollback();//
+//			rollback();//
 			return memberData;
 		}
 
@@ -58,19 +58,19 @@ try {//
 		if (resultCount < 1) {
 			memberData.setMessage("註冊錯誤，請聯絡管理員!");
 			memberData.setSuccessful(false);
-			rollback();//
+//			rollback();//
 			return memberData;
 		}
 
 		memberData.setMessage("註冊成功");
 		memberData.setSuccessful(true);
-		commit();//
+//		commit();//
 		return memberData;
-	}catch(Exception e){//
-		rollback();//
-		e.printStackTrace();//
-		return null;//
-	}//
+//	}catch(Exception e){//
+//		rollback();//
+//		e.printStackTrace();//
+//		return null;//
+//	}//
 	}
 	@Override
 	public MemberData login(MemberData memberData) {
