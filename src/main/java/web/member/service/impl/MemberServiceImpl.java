@@ -103,22 +103,68 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
+//	public MemberData edit(MemberData memberData) {
+//		final MemberData oMember = dao.selectById(memberData.getMemberNo());
+//		memberData.setMemberName(oMember.getMemberName());
+//		memberData.setMemberGender(oMember.getMemberGender());
+//		memberData.setMemberPassword(oMember.getMemberPassword());
+//		memberData.setMemberPhone(oMember.getMemberPhone());
+//		memberData.setMemberEmail(oMember.getMemberEmail());
+//		memberData.setMemberAddress(oMember.getMemberAddress());
+//		memberData.setMemberBirthday(oMember.getMemberBirthday());
+//		memberData.setMemberNation(oMember.getMemberNation());
+//		memberData.setMemberPic(oMember.getMemberPic());
+//		memberData.setMemberCard(oMember.getMemberCard());
+//		final int resultCount = dao.update(memberData);
+//		memberData.setSuccessful(resultCount > 0);
+//		memberData.setMessage(resultCount > 0 ? "修改成功" : "修改失敗");
+//		return memberData;
+//	}
 	public MemberData edit(MemberData memberData) {
-		final MemberData oMember = dao.selectBymemberAccount(memberData.getMemberAccount());
-		memberData.setMemberName(oMember.getMemberName());
-		memberData.setMemberGender(oMember.getMemberGender());
-		memberData.setMemberPassword(oMember.getMemberPassword());
-		memberData.setMemberPhone(oMember.getMemberPhone());
-		memberData.setMemberEmail(oMember.getMemberEmail());
-		memberData.setMemberAddress(oMember.getMemberAddress());
-		memberData.setMemberBirthday(oMember.getMemberBirthday());
-		memberData.setMemberNation(oMember.getMemberNation());
-		memberData.setMemberPic(oMember.getMemberPic());
-		memberData.setMemberCard(oMember.getMemberCard());
-		final int resultCount = dao.update(memberData);
-		memberData.setSuccessful(resultCount > 0);
-		memberData.setMessage(resultCount > 0 ? "修改成功" : "修改失敗");
-		return memberData;
+		final MemberData oMember = dao.selectById(memberData.getMemberNo());
+
+		if (memberData.getMemberName() != null) {
+			oMember.setMemberName(memberData.getMemberName());
+		}
+		if (memberData.getMemberGender() != null) {
+			oMember.setMemberGender(memberData.getMemberGender());
+		}
+		if (memberData.getMemberPassword() != null) {
+			oMember.setMemberPassword(memberData.getMemberPassword());
+		}
+		if (memberData.getMemberPhone() != null) {
+			oMember.setMemberPhone(memberData.getMemberPhone());
+		}
+		if (memberData.getMemberEmail() != null) {
+			oMember.setMemberEmail(memberData.getMemberEmail());
+		}
+		if (memberData.getMemberAddress() != null) {
+			oMember.setMemberAddress(memberData.getMemberAddress());
+		}
+		if (memberData.getMemberBirthday() != null) {
+			oMember.setMemberBirthday(memberData.getMemberBirthday());
+		}
+		if (memberData.getMemberNation() != null) {
+			oMember.setMemberNation(memberData.getMemberNation());
+		}
+		if (memberData.getMemberPic() != null) {
+			oMember.setMemberPic(memberData.getMemberPic());
+		}
+		if (memberData.getMemberCard() != null) {
+			oMember.setMemberCard(memberData.getMemberCard());
+		}
+
+		final int resultCount = dao.update(oMember);
+		oMember.setSuccessful(resultCount > 0);
+		oMember.setMessage(resultCount > 0 ? "修改成功" : "修改失敗");
+		return oMember;
+	}
+
+	public MemberData selectById(MemberData memberData) {
+		MemberData resultData = dao.selectById(memberData.getMemberNo());
+		resultData.setSuccessful(true);
+		resultData.setMessage("查询成功");
+		return resultData;
 	}
 
 	@Override
@@ -128,16 +174,11 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public boolean remove(Integer id) {
-		try {
-			beginTransaction();
+
 			final int resultCount=dao.deleteById(id);
-			commit();
+
 			return resultCount >0;
-		} catch (Exception e) {
-			rollback();
-			e.printStackTrace();
-			return false;
-		}
+
 //			return dao.deleteById(id)>0;
 	}
 

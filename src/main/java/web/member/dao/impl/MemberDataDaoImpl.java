@@ -97,7 +97,7 @@ public class MemberDataDaoImpl implements MemberDataDao {
 //        try {
 //            Transaction transaction = session.beginTransaction();
 //
-        session.update(memberdata);
+        session.merge(memberdata);
 
 //            Hibernate.initialize(MemberData.class);
 //            transaction.commit();

@@ -15,6 +15,8 @@ public interface MemberService extends CoreService {
 
 	List<MemberData> findAll();
 
+	MemberData selectById(MemberData memberData)    ;
+
 	boolean remove(Integer id);
 
 	boolean save(MemberData member);
