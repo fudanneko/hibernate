@@ -57,6 +57,9 @@ public class MemberData extends Core {
     @Column(name = "memberPic", insertable = false)
     private byte[] memberPic = null;
 
+    @Column(name = "memberPicString", insertable = false)
+    private String memberPic4json;
+
     @Builder.Default
     @Column(name = "memberCard", length = 19, insertable = false)
     private String memberCard = null;
@@ -64,6 +67,10 @@ public class MemberData extends Core {
     @Builder.Default
     @Column(name = "memberPoints", nullable = false, insertable = false)
     private Integer memberPoints = 0;
+
+    @Builder.Default
+    @Column(name = "levelNo", nullable = false,insertable = false)
+    private Byte levelNo=1;
 
     @Builder.Default
     @Column(name = "memberStat", nullable = false, insertable = false)

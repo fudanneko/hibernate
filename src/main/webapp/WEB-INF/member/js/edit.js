@@ -16,6 +16,10 @@
     const inputmemberStat = document.querySelector('#inputmemberStat');
     const inputs = document.querySelectorAll('input');
     const confirmbtn = document.querySelector('#confirmbtn');
+    const avatarpreview = document.querySelector('#avatar-preview')
+    const avatarUpload = document.getElementById("inputmemberPic");
+    const avatarPlaceholder = document.getElementById("avatar-placeholder");
+    const avatarPreview = document.getElementById("avatar-preview");
 
 
     const canslebtn = document.querySelector('#canslebtn');
@@ -26,7 +30,7 @@
     console.log(memberId);
     console.log("register.js啟動");
 
-    // 查資料回來
+    // 查資料回來========================================================
     function getmemberdata() {//取瀏覽器的memberid 去查出來
         console.log('進入getmemberdata')
         fetch("getmemberdata", {
@@ -41,7 +45,6 @@
             .then((response) => response.json())
             .then(body => {
                 // 在這裡處理回應的資料
-                console.log(body);
                 const {
                     memberNo,
                     memberAccount,
@@ -54,7 +57,7 @@
                     levelNo,
                     memberBirthday,
                     memberNation,
-                    // memberPic,
+                    memberPic4json,
                     memberCard,
                     memberPoints,
                     memberStat
@@ -76,11 +79,21 @@
                 inputlevelNo.value = levelNo;
                 inputmemberBirthday.value = memberBirthday;
                 inputmemberNation.value = memberNation;
-                // inputmemberPic.value = memberPic;
+                // avatarpreview.src = memberPic4json;
                 inputmemberCard.value = memberCard;
                 inputmemberPoints.value = memberPoints;
                 inputmemberStat.value = memberStat;
                 inputmemberAccount.value = memberAccount;
+
+                avatarpreview.src = `http://localhost:8080/hibernate_war/DBGifReaderController?memberNo=${memberNo}`;
+                if(memberPic4json){
+                    avatarPreview.style.display = "block";
+                    avatarPlaceholder.style.display = "none";
+                }else {
+                    avatarPreview.src = "#";
+                    avatarPreview.style.display = "none";
+                    avatarPlaceholder.style.display = "block";
+                }
 
 
             })
@@ -90,20 +103,38 @@
             });
 
     };
+    //============總之先查一次===============================
     getmemberdata();
-// 性別input控制
+
+// 性別input控制=====================================================================
     const selectGender = document.querySelector('#selectGender');
     selectGender.addEventListener('change', (e) => {
         const selectedValue = selectGender.value;
         // console.log(selectGender.value);
         inputmemberGender.value = selectedValue;
     })
-
+    //重製按鈕===========================================================================
     canslebtn.addEventListener('click', () => {
         getmemberdata();
     });
 
+    //讀取圖片 轉成base64==================================================
+    let base64Image = '';
+    inputmemberPic.addEventListener("change", function (event) {
+        const file = event.target.files[0]; // 獲取選擇的檔案
+        if (file) {
+            const reader = new FileReader(); //讀取
+            reader.onload = function (e) {
+                const imageSrc = e.target.result; // 獲取數據
+                base64Image = imageSrc.split(",")[1];// 轉成base64
 
+            };
+            reader.readAsDataURL(file); // 讀取成url
+        }
+    });
+
+
+// 確認修改按鈕=================================================================
     confirmbtn.addEventListener('click', () => {
         // 前端確認資料填寫
         msg.textContent = ' ';
@@ -126,7 +157,7 @@
             return;
         }
 
-        console.log(inputmemberAddress.value);
+        // console.log(inputmemberAddress.value);
         // const AddressValue = inputmemberAddress.value;
         // const AddressPattern = /^[\u4E00-\u9FA5]{3,}(?:市|縣|區)[^\s]*[路街巷][\u4E00-\u9FA5]{2,}/;
         // if (!AddressPattern.test(AddressValue)) {
@@ -139,7 +170,15 @@
             msg.textContent = '信用卡長度須介於15~19碼';
             return;
         }
-// 檢查結束
+        let membergender = inputmemberGender.value;
+        if (membergender ==="男生") {
+            membergender=1;
+        }else if(membergender ==="女生"){
+            membergender=2;
+        }
+        // 檢查結束
+        console.log(inputmemberNo.value);
+        console.log(base64Image);
 
         msg.textContent = '';
         fetch('edit', {
@@ -154,13 +193,13 @@
                 memberPhone: inputmemberPhone.value,
                 memberEmail: inputmemberEmail.value,
                 memberName: inputmemberName.value,
-                memberGender: inputmemberGender.value,
+                memberGender: membergender,
                 memberPhone: inputmemberPhone.value,
                 memberEmail: inputmemberEmail.value,
                 memberAddress: inputmemberAddress.value,
                 memberBirthday: inputmemberBirthday.value,
                 memberNation: inputmemberNation.value,
-                // memberPic: inputmemberPic.value,
+                memberPic4json: base64Image,
                 memberCard: inputmemberCard.value,
             }),
         })
@@ -170,9 +209,9 @@
                 const {successful} = body;//const successful = body.successful;
                 const {memberAccount} = body;
                 if (successful) {
-                    for (let input of inputs) {
-                        input.disabled = true;
-                    }
+                    // for (let input of inputs) {
+                    //     input.disabled = true;
+                    // }
                     msg.className = 'info';
                     msg.textContent = '修改成功';
                 } else {

@@ -254,8 +254,8 @@
                                 <div class="input-group mt-2">
                                     <select  class="btn btn-outline-primary dropdown-toggle" id="selectGender">
                                         <option selected disabled>未選擇</option>
-                                        <option value="1">男生</option>
-                                        <option value="2">女生</option>
+                                        <option >男生</option>
+                                        <option >女生</option>
                                     </select>
                                     <input type="text" class="form-control" aria-label="Text input with dropdown button"
                                      readonly  id="inputmemberGender">
@@ -275,7 +275,7 @@
                                 </div>
                                 <div class="input-group mt-2">
                                     <label for="inputmemberNation" class="input-group-text">國籍</label>
-                                    <input type="text" class="form-control" id="inputmemberNation" value="台灣" readonly>
+                                    <input type="text" class="form-control" id="inputmemberNation" value="台灣" >
                                 </div>
                                 <!-- 上傳大頭貼區塊開始 -->
                                 <div class="input-group">
@@ -283,11 +283,11 @@
                                     <div class="d-flex align-items-center">
                                         <div id="avatar-placeholder" class="avatar-placeholder ms-3"></div>
                                         <img id="avatar-preview" src="#" alt="Avatar Preview" style="
-                  display: none;
+                  display: block;
                   width: 100px;
                   height: 100px;
                   aspect-ratio: 1 / 1;
-                  border-radius: 50%;
+                  border-radius: 100%;
                 "
                                              class="img-fluid rounded-circle border border-dark ms-3"/>
                                         <div class="flex-grow-1 custom-file ps-3">
@@ -436,11 +436,11 @@
         const file = avatarUpload.files[0];
         const reader = new FileReader();
 
-        reader.onload = function (e) {
-            avatarPreview.src = e.target.result;
-            avatarPreview.style.display = "block";
-            avatarPlaceholder.style.display = "none"; // 隱藏灰色區塊
-        };
+            reader.onload = function (e) {
+                avatarPreview.src = e.target.result;
+                avatarPreview.style.display = "block";
+                avatarPlaceholder.style.display = "none"; // 隱藏灰色區塊
+            };
 
         if (file) {
             reader.readAsDataURL(file);
@@ -450,6 +450,8 @@
             avatarPlaceholder.style.display = "block"; // 顯示灰色區塊
         }
     });
+
+
 </script>
 </body>
 
