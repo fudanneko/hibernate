@@ -278,18 +278,36 @@
                                     <input type="text" class="form-control" id="inputmemberNation" value="台灣" >
                                 </div>
                                 <!-- 上傳大頭貼區塊開始 -->
+
+                                <style>
+                                    .img-div{
+                                        /*max-width: 200px;*/
+                                        width: 100px;
+                                        height: 100px;
+                                        border-radius: 500px;
+                                        overflow: hidden;
+                                        /*position: relative;*/
+                                    }
+                                    #avatar-preview{
+                                        /*width: 100%;*/
+                                        /*display: block;*/
+                                        /*aspect-ratio: unset;*/
+                                        /*border-radius: unset;*/
+                                        /*height: unset;*/
+                                        position: relative;
+                                        /*top: -25%;*/
+                                    }
+                                </style>
                                 <div class="input-group">
                                     <div class="input-group-text">會員照片</div>
                                     <div class="d-flex align-items-center">
                                         <div id="avatar-placeholder" class="avatar-placeholder ms-3"></div>
-                                        <img id="avatar-preview" src="#" alt="Avatar Preview" style="
-                  display: block;
-                  width: 100px;
-                  height: 100px;
-                  aspect-ratio: 1 / 1;
-                  border-radius: 100%;
+                                        <div class="img-div  ms-3">
+                                            <img id="avatar-preview" src="#" alt="Avatar Preview" style="
+
                 "
-                                             class="img-fluid rounded-circle border border-dark ms-3"/>
+                                                 class="img-fluid border border-dark"/>
+                                        </div>
                                         <div class="flex-grow-1 custom-file ps-3">
                                             <input type="file" class="form-control" id="inputmemberPic"
                                                    aria-describedby="avatar-upload-label"/>

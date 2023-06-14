@@ -12,9 +12,10 @@
     console.log("register.js啟動");
 
     btn2.addEventListener('click', () => {
+
         // 前端確認資料填寫
         msg.textContent = ' ';
-        console.log("按鈕啟動");
+        console.log("註冊按鈕啟動");
         const nicknameLength = memberName.value.length;
         if (nicknameLength < 1 || nicknameLength > 20) {
             msg.textContent = '姓名長度須介於1~20字元';
@@ -76,9 +77,23 @@
                     btn2.disabled = true;
                     msg.className = 'info';
                     msg.textContent = '註冊成功';
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: '註冊成功!',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
                 } else {
                     msg.className = 'error';
                     msg.textContent = '註冊失敗';
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: '註冊失敗!',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
                 }
             });
 

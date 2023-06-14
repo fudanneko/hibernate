@@ -41,7 +41,6 @@ public class MemberData extends Core {
     @Column(name = "memberAddress", length = 100)
     private String memberAddress = null;
 
-//    @Builder.Default
     @Column(name = "memberJoinTime", nullable = false, insertable = false, updatable = false)
     private Timestamp memberJoinTime;
 
