@@ -99,46 +99,6 @@
 
     });
 
-    // function addmember() {
-    //     //-----------打包資料(start)
-    //     let datas = {
-    //         // memberNo: parseInt($id("memberNo").value),
-    //         memberAccount: $id("memberAccount2").value,
-    //         memberName: $id("memberName").value,
-    //         memberGender: parseInt($id("memberGender").value),
-    //         memberPassword: $id("memberPassword").value,
-    //         memberPhone: $id("memberPhone").value,
-    //         memberEmail: $id("memberEmail").value
-    //         // memberAddress: $id("memberAddress").value,
-    //         // memberJoinTime: $id("memberJoinTime").value,
-    //         // levelNo: parseInt($id("levelNo").value),
-    //         // memberBirthday: $id("memberBirthday").value,
-    //         // memberNation: $id("memberNation").value,
-    //         // memberPic: $id("memberPic").value,
-    //         // memberCard: $id("memberCard").value,
-    //         // memberPoints: $id("memberPoints").value,
-    //         // memberStat: parseInt($id("memberStat").value),
-    //     }
-    //     //-----------打包資料(end)
-    //     //---------------------------------送出Ajax請求
-    //     $.ajax('login', {
-    //         method: "post",
-    //         contentType: "application/json",
-    //         data: JSON.stringify(datas),
-    //         dataType: "text",
-    //         success(response) {
-    //             if (response.indexOf("success") !== -1) {
-    //                 alert("新增成功~");
-    //                 // clearForm();
-    //             }
-    //         },
-    //         error(xhr, status, error) {
-    //             console.log("status : ", status);
-    //             cons
-    //             ole.log("error : ", error);
-    //         }
-    //     });
-    //
-    // };
+
 
 })();

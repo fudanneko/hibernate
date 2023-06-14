@@ -229,7 +229,8 @@ public class MemberDataDaoImpl implements MemberDataDao {
 //            session.getTransaction().rollback();
 //            e.printStackTrace();
 //        }
-        return session.get(MemberData.class, memberNo);
+        MemberData resuluMemberData = session.get(MemberData.class, memberNo);
+        return resuluMemberData;
 
 //		====JDBC寫法====
 //		final String sql = "select * from MEMBER where ID = ?";

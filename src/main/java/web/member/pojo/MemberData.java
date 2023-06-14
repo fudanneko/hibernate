@@ -24,6 +24,7 @@ public class MemberData extends Core {
 
     @Column(name = "memberName", nullable = false, length = 20)
     private String memberName;
+
     @Builder.Default
     @Column(name = "memberGender", nullable = false, insertable = false)
     private Byte memberGender = null;
@@ -38,7 +39,7 @@ public class MemberData extends Core {
     private String memberEmail;
 
     @Builder.Default
-    @Column(name = "memberAddress", length = 100)
+    @Column(name = "memberAddress", length = 100, insertable = false)
     private String memberAddress = null;
 
     @Column(name = "memberJoinTime", nullable = false, insertable = false, updatable = false)
@@ -49,31 +50,28 @@ public class MemberData extends Core {
     private Timestamp memberBirthday = null;
 
     @Builder.Default
-    @Column(name = "memberNation", length = 10, insertable = false)
-    private String memberNation = null;
+    @Column(name = "memberNation", length = 10, updatable = false)
+    private String memberNation = "台灣";
 
-    @Builder.Default
     @Column(name = "memberPic", insertable = false)
-    private byte[] memberPic = null;
+    private byte[] memberPic ;
 
     @Column(name = "memberPicString", insertable = false)
-    private String memberPic4json;
+    private String memberPic4json ;
 
-    @Builder.Default
     @Column(name = "memberCard", length = 19, insertable = false)
-    private String memberCard = null;
+    private String memberCard ;
 
     @Builder.Default
-    @Column(name = "memberPoints", nullable = false, insertable = false)
+    @Column(name = "memberPoints", nullable = false)
     private Integer memberPoints = 0;
 
     @Builder.Default
-    @Column(name = "levelNo", nullable = false,insertable = false)
+    @Column(name = "levelNo", nullable = false)
     private Byte levelNo=1;
 
     @Builder.Default
-    @Column(name = "memberStat", nullable = false, insertable = false)
+    @Column(name = "memberStat", nullable = false)
     private Byte memberStat = 0;
-
 
 }

@@ -29,10 +29,15 @@ public class editServlet extends HttpServlet {
             return;
         }
         //把圖片從base64轉型成byte[]
-        if(memberData.getMemberPic4json()!= null){
+        System.out.println("這字串到底是啥?"+memberData.getMemberPic4json());
+        System.out.println("修改時有沒有照片傳進來?");
+        System.out.println(memberData.getMemberPic4json() != null && !memberData.getMemberPic4json().isEmpty());
+        if(memberData.getMemberPic4json() != null && !memberData.getMemberPic4json().isEmpty()){
             byte[] MemberPic = Base64.getDecoder().decode(memberData.getMemberPic4json());
             memberData.setMemberPic(MemberPic);
-            memberData.setMemberPic4json("");
+            memberData.setMemberPic4json("有傳圖進來");
+        }else{
+            memberData.setMemberPic4json("沒有傳圖進來");
         }
 
         memberData = SERVICE.edit(memberData);
@@ -43,6 +48,8 @@ public class editServlet extends HttpServlet {
             }
             if(memberData.getMemberPic()!=null){
                 memberData.setMemberPic4json("有圖");
+            }else {
+                memberData.setMemberPic4json("沒有圖");
             }
         }
         writePojo2Json(response, memberData);

@@ -13,6 +13,7 @@ import java.util.Base64;
 import static core.util.CommonUtil.json2Pojo;
 import static core.util.CommonUtil.writePojo2Json;
 import static web.member.util.MemberConstants.SERVICE;
+
 @WebServlet("/member/getmemberdata")
 public class getmemberdataServlt extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -29,15 +30,15 @@ public class getmemberdataServlt extends HttpServlet {
             return;
         }
 
-
         memberData = SERVICE.selectById(memberData);
         if (memberData.isSuccessful()) {
             if (request.getSession(false) != null) {
                 request.changeSessionId();
             }
-            if(memberData.getMemberPic()!= null){
-                String MemberPic=Base64.getEncoder().encodeToString(memberData.getMemberPic());
-                memberData.setMemberPic4json(MemberPic);
+            if(memberData.getMemberPic4json()!=null){
+                memberData.setMemberPic4json("有圖");
+            }else {
+                memberData.setMemberPic4json("沒有圖");
             }
         }
         writePojo2Json(response, memberData);

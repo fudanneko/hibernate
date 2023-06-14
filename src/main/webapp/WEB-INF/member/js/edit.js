@@ -27,8 +27,7 @@
     const cancelbtn2 = document.querySelector('#cancelbtn2');
     const msg = document.querySelector('#msg');
     const memberId = sessionStorage.getItem('memberNo');
-    console.log(memberId);
-    console.log("register.js啟動");
+    console.log("edit.js啟動");
 
     // 查資料回來========================================================
     function getmemberdata() {//取瀏覽器的memberid 去查出來
@@ -62,6 +61,8 @@
                     memberPoints,
                     memberStat
                 } = body;
+                console.log(body);
+                console.log('取完值 要放上input')
                 inputmemberNo.value = memberNo;
                 inputmemberAccount.value = memberAccount;
                 inputmemberName.value = memberName;
@@ -77,20 +78,34 @@
                 inputmemberAddress.value = memberAddress;
                 inputmemberJoinTime.value = memberJoinTime;
                 inputlevelNo.value = levelNo;
-                inputmemberBirthday.value = memberBirthday;
+
+                const originalDate = new Date(memberBirthday);
+                const year = originalDate.getFullYear();
+                const month = originalDate.getMonth() + 1; // 月份是從 0 開始計算，所以需要加 1
+                const day = originalDate.getDate();
+                const formattedDate = year + '-' + ('0' + month).slice(-2) + '-' + ('0' + day).slice(-2);
+                inputmemberBirthday.value = formattedDate;
+
                 inputmemberNation.value = memberNation;
                 // avatarpreview.src = memberPic4json;
+
+               if(memberPic4json =="有圖"){
+                   avatarPreview.style.display = "block";
+                   avatarPlaceholder.style.display = "none"; // 隱藏灰色區塊
+               }else {
+                   avatarPreview.style.display = "none";
+                   avatarPlaceholder.style.display = "block"; // 顯示灰色區塊
+               }
                 inputmemberCard.value = memberCard;
                 inputmemberPoints.value = memberPoints;
                 inputmemberStat.value = memberStat;
                 inputmemberAccount.value = memberAccount;
-
+                console.log('放圖片')
                 avatarpreview.src = `http://localhost:8080/hibernate_war/DBGifReaderController?memberNo=${memberNo}`;
                 if(memberPic4json){
                     avatarPreview.style.display = "block";
                     avatarPlaceholder.style.display = "none";
                 }else {
-                    avatarPreview.src = "#";
                     avatarPreview.style.display = "none";
                     avatarPlaceholder.style.display = "block";
                 }
@@ -98,7 +113,6 @@
 
             })
             .catch((error) => {
-                // 處理錯誤
                 console.error("Error:", error);
             });
 
@@ -110,7 +124,6 @@
     const selectGender = document.querySelector('#selectGender');
     selectGender.addEventListener('change', (e) => {
         const selectedValue = selectGender.value;
-        // console.log(selectGender.value);
         inputmemberGender.value = selectedValue;
     })
     //重製按鈕===========================================================================
@@ -138,7 +151,7 @@
     confirmbtn.addEventListener('click', () => {
         // 前端確認資料填寫
         msg.textContent = ' ';
-        console.log("按鈕啟動");
+        console.log("確認修改按鈕啟動");
         const nicknameLength = inputmemberName.value.length;
         if (nicknameLength < 1 || nicknameLength > 20) {
             msg.textContent = '姓名長度須介於1~20字元';
@@ -166,10 +179,13 @@
         // }
 
         const memberCardLength = inputmemberCard.value.length;
-        if (memberCardLength < 15 || memberCardLength > 19) {
-            msg.textContent = '信用卡長度須介於15~19碼';
-            return;
+        if(memberCardLength != 0){
+            if (memberCardLength < 15 || memberCardLength > 19) {
+                msg.textContent = '信用卡長度須介於15~19碼';
+                return;
+            }
         }
+
         let membergender = inputmemberGender.value;
         if (membergender ==="男生") {
             membergender=1;
@@ -177,8 +193,6 @@
             membergender=2;
         }
         // 檢查結束
-        console.log(inputmemberNo.value);
-        console.log(base64Image);
 
         msg.textContent = '';
         fetch('edit', {

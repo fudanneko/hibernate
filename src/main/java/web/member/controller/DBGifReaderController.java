@@ -15,25 +15,40 @@ import static web.member.util.MemberConstants.SERVICE;
 
     @WebServlet("/DBGifReaderController")
 public class DBGifReaderController extends HttpServlet {
-    private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
 
-    public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
-        res.setContentType("image/gif");
-        ServletOutputStream out = res.getOutputStream();
+            res.setContentType("image/gif");
+            ServletOutputStream out = res.getOutputStream();
 
-        MemberDataDaoImpl dao = new MemberDataDaoImpl();
-        try {
-            Integer memberNoA = Integer.valueOf(req.getParameter("memberNo"));
-            System.out.println(memberNoA);
-            out.write(dao.selectById(memberNoA).getMemberPic());
-        } catch (Exception e) {
-            InputStream in = getServletContext().getResourceAsStream("/webapp/WEB-INF/login/image/JAMIGO_LOGO.gif");
-            byte[] buf = new byte[in.available()];
-            in.read(buf);
-            out.write(buf);
-            in.close();
+            MemberDataDaoImpl dao = new MemberDataDaoImpl();
+            try {
+                Integer memberNoA = Integer.valueOf(req.getParameter("memberNo"));
+                MemberData thismemberNo = dao.selectById(memberNoA);
+                byte[] thisPic = thismemberNo.getMemberPic();
+
+                if (thisPic != null) {
+                    out.write(thisPic);
+                    System.out.println("把查到的物件的照片放上去" );
+                } else {
+                    out.write(getImageBytes("/WEB-INF/member/image/gray.jpg"));
+                    System.out.println("把預設的照片放上去" );
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        private byte[] getImageBytes(String imageUrl) throws IOException {
+            InputStream in = getServletContext().getResourceAsStream(imageUrl);
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            int nRead;
+            byte[] data = new byte[1024];
+            while ((nRead = in.read(data, 0, data.length)) != -1) {
+                buffer.write(data, 0, nRead);
+            }
+            buffer.flush();
+            return buffer.toByteArray();
         }
     }
-
-}
