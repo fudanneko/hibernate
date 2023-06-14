@@ -24,7 +24,7 @@
                     sessionStorage.setItem('memberNo', memberNo);
                     sessionStorage.setItem('memberAccount', memberAccount);
                     Swal.fire({
-                        position: 'top-end',
+                        position: 'center',
                         icon: 'success',
                         title: '登入成功!',
                         showConfirmButton: false,

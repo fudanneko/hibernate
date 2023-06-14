@@ -78,7 +78,7 @@
                     msg.className = 'info';
                     msg.textContent = '註冊成功';
                     Swal.fire({
-                        position: 'top-end',
+                        position: 'center',
                         icon: 'success',
                         title: '註冊成功!',
                         showConfirmButton: false,
@@ -88,7 +88,7 @@
                     msg.className = 'error';
                     msg.textContent = '註冊失敗';
                     Swal.fire({
-                        position: 'top-end',
+                        position: 'center',
                         icon: 'success',
                         title: '註冊失敗!',
                         showConfirmButton: false,

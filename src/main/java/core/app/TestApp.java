@@ -9,20 +9,20 @@ import java.util.List;
 
 public class TestApp {
     public static void main(String[] args) {
-        CoreDao<MemberData, Integer> memberDao = new MemberDataDaoImpl();
-//        List<MemberData> members = memberDao.selectAll();
-//        for (MemberData membera:members
-//             ) {
-//            System.out.println(membera.getMemberName());
-//        }
-        MemberData test1 = new MemberData();
-        test1.setMemberAccount("oooooooo");
-        test1.setMemberName("鍾欣宜");
-        test1.setMemberPassword("oooooooo");
-        test1.setMemberPhone("0988777777");
-        test1.setMemberEmail("asd@gmail.com");
-        int members = memberDao.insert(test1);
-        System.out.println("成功插入");
+//        CoreDao<MemberData, Integer> memberDao = new MemberDataDaoImpl();
+////        List<MemberData> members = memberDao.selectAll();
+////        for (MemberData membera:members
+////             ) {
+////            System.out.println(membera.getMemberName());
+////        }
+//        MemberData test1 = new MemberData();
+//        test1.setMemberAccount("oooooooo");
+//        test1.setMemberName("鍾欣宜");
+//        test1.setMemberPassword("oooooooo");
+//        test1.setMemberPhone("0988777777");
+//        test1.setMemberEmail("asd@gmail.com");
+//        int members = memberDao.insert(test1);
+//        System.out.println("成功插入");
 
     }
 }
