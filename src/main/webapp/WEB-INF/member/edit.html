@@ -29,6 +29,7 @@
     <link
             href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@300;400;500;600;700;800&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500&display=swap"
             rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>前臺頁面管理</title>
 </head>
 
@@ -230,7 +231,7 @@
                             <h2>會員資訊管理</h2>
                         </div>
                         <div class="controll-content counter-alter-controll-content">
-                            <form action="">
+                            <form action="" id="editmemberform">
 
                                 <div class="input-group mt-2">
                                     <label for="inputmemberNo" class="input-group-text">會員編號</label>
@@ -361,6 +362,7 @@
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                             aria-label="Close"></button>
                                                 </div>
+                                                <!-- 燈箱區  修改密碼-->
                                                 <div class="modal-body">
                                                     <form>
                                                         <div class="mb-3">
