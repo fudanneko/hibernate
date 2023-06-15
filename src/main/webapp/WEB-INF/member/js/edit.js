@@ -26,15 +26,19 @@
     const msg = document.querySelector('#msg');
     const memberId = sessionStorage.getItem('memberNo');
 
-    const oldmemberPassword = document.querySelector('#oldmemberPassword')
-    const newmemberPassword = document.querySelector('#newmemberPassword')
-    const newmemberPasswordConfirm = document.querySelector('#newmemberPasswordConfirm')
+    const inputoldmemberPassword = document.querySelector('#oldmemberPassword')
+    const inputnewmemberPassword = document.querySelector('#newmemberPassword')
+    const inputnewmemberPasswordConfirm = document.querySelector('#newmemberPasswordConfirm')
+
+    const msg2 = document.querySelector('#msg2');
     console.log("edit.js啟動");
 
 
     // ===============================VVV方法區VVV====================================
 
     // ============================1.查資料回來getmemberdata()========================
+    let memberpassword4edit = '';
+
     function getmemberdata() {//取瀏覽器的memberid 去查出來
         console.log('進入getmemberdata')
         fetch("getmemberdata", {
@@ -64,7 +68,8 @@
                     memberPic4json,
                     memberCard,
                     memberPoints,
-                    memberStat
+                    memberStat,
+                    memberPassword
                 } = body;
                 console.log(body);
                 inputmemberNo.value = memberNo;
@@ -120,6 +125,7 @@
                     avatarPreview.style.display = "none";
                     avatarPlaceholder.style.display = "block";
                 }
+                memberpassword4edit = memberPassword;
 
 
             })
@@ -212,7 +218,6 @@
             .then(body => {
                 console.log(body);
                 const {successful} = body;//const successful = body.successful;
-                const {memberAccount} = body;
                 if (successful) {
                     msg.className = 'info';
                     msg.textContent = '修改成功';
@@ -236,9 +241,11 @@
             });
 
     }
+
     // ============================3. 圖片讀取，轉型成base64 readPic()========================
     let base64Image = '';
-    function readPic(event){
+
+    function readPic(event) {
         const file = event.target.files[0]; // 獲取選擇的檔案
         if (file) {
             const reader = new FileReader(); //讀取
@@ -250,8 +257,9 @@
             reader.readAsDataURL(file); // 讀取成url
         }
     }
-    // ============================3. 圖片讀取，轉型成base64 readPic()========================
-    function resetform(){
+
+    // ============================4.清空表單 resetform()========================
+    function resetform() {
         inputmemberNo.value = "";
         inputmemberAccount.value = "";
         inputmemberName.value = "";
@@ -271,9 +279,80 @@
         inputmemberCard.value = "";
         msg.textContent = '';
     }
+
+    // ============================5. 修改密碼 editmemberpassword()========================
+
+    function editmemberpassword() {
+        console.log("修改密碼按鈕")
+        msg2.textContent="";
+        const pwdLength = inputnewmemberPassword.value.length;
+        if (pwdLength < 6 || pwdLength > 12) {
+            msg2.textContent = '密碼長度須介於6~12字元';
+            return;
+        }
+        msg.textContent = '';
+        let newpassword = null;
+        if (inputnewmemberPassword.value == inputnewmemberPasswordConfirm.value) {
+            if (inputoldmemberPassword.value == memberpassword4edit) {
+                newpassword = inputnewmemberPassword.value;
+            }
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: '密碼不正確!!',
+                footer: '<a href=""></a>'
+            })
+        }
+        if (newpassword !== null && newpassword !== "" ) {
+            fetch('edit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    memberNo: inputmemberNo.value,
+                    memberPassword: newpassword
+                })
+            })
+                .then(resp => resp.json())
+                .then(body => {
+                    console.log(body);
+                    const {successful} = body;//const successful = body.successful;
+                    if (successful) {
+                        msg.className = 'info';
+                        msg2.textContent = '修改成功';
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: '密碼修改成功!',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                        setTimeout(function() {
+                            console.log("等1.5秒");
+                            location = '../member/edit.html';
+                        }, 1600);
+                    } else {
+                        msg.className = 'error';
+                        msg2.textContent = '修改失敗';
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: '密碼修改失敗!',
+                            footer: '<a href=""></a>'
+                        })
+                    }
+                });
+
+        }
+
+    }
+
     // ===============================^^^方法區^^^====================================
 
     // ===============================VVV使用方法區VVV================================
+
     //=================================1. 總之先查一次=================================
     getmemberdata();
     // ===============================2. 確認修改按鈕================================
@@ -294,7 +373,7 @@
     //=================================3. 重製按鈕(再查一次)=============================
     canslebtn.addEventListener('click', () => {
         resetform();
-        setTimeout(function() {
+        setTimeout(function () {
             console.log("等1秒");
             getmemberdata();
         }, 1000);
@@ -311,6 +390,17 @@
     selectGender.addEventListener('change', (e) => {
         const selectedValue = selectGender.value;
         inputmemberGender.value = selectedValue;
+    })
+
+    // ================================5. 修改密碼的確認按鈕====================================
+    confirmbtn2.addEventListener('click', () => {
+        editmemberpassword();
+    })
+    // ================================5. 修改密碼的取消按鈕====================================
+    cancelbtn2.addEventListener('click', () => {
+        inputnewmemberPassword.value = "";
+        inputnewmemberPasswordConfirm.value = "";
+        inputoldmemberPassword.value = "";
     })
     // ===============================^^^使用方法區^^^==============================
 
