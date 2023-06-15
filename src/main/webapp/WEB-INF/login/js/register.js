@@ -71,9 +71,10 @@
                 const {successful} = body;//const successful = body.successful;
                 const {memberAccount} =body;
                 if (successful) {
-                    for (let input of inputs) {
-                        input.disabled = true;
-                    }
+                    // for (let input of inputs) {
+                    //     input.disabled = true;
+                    // }
+
                     btn2.disabled = true;
                     msg.className = 'info';
                     msg.textContent = '註冊成功';
@@ -94,7 +95,11 @@
                         showConfirmButton: false,
                         timer: 1500
                     })
-                }
+                };
+                setTimeout(function() {
+                    console.log("等1.5秒");
+                    location = '../login/login.html';
+                }, 1600);
             });
 
     });

@@ -75,7 +75,11 @@
                 inputmemberGender.value = memberGendera;
                 inputmemberPhone.value = memberPhone;
                 inputmemberEmail.value = memberEmail;
-                inputmemberAddress.value = memberAddress;
+
+                if(typeof memberAddress !== 'undefined'){
+                    inputmemberAddress.value = memberAddress;
+                }
+
                 inputmemberJoinTime.value = memberJoinTime;
                 inputlevelNo.value = levelNo;
 
@@ -87,25 +91,28 @@
                 inputmemberBirthday.value = formattedDate;
 
                 inputmemberNation.value = memberNation;
-                // avatarpreview.src = memberPic4json;
 
-               if(memberPic4json =="有圖"){
-                   avatarPreview.style.display = "block";
-                   avatarPlaceholder.style.display = "none"; // 隱藏灰色區塊
-               }else {
-                   avatarPreview.style.display = "none";
-                   avatarPlaceholder.style.display = "block"; // 顯示灰色區塊
-               }
-                inputmemberCard.value = memberCard;
+                if (memberPic4json == "有圖") {
+                    avatarPreview.style.display = "block";
+                    avatarPlaceholder.style.display = "none"; // 隱藏灰色區塊
+                } else {
+                    avatarPreview.style.display = "none";
+                    avatarPlaceholder.style.display = "block"; // 顯示灰色區塊
+                }
+                if(typeof memberCard !== 'undefined'){
+                    inputmemberCard.value = memberCard;
+                }else {
+                    inputmemberCard.value = 0;
+                }
+
                 inputmemberPoints.value = memberPoints;
                 inputmemberStat.value = memberStat;
                 inputmemberAccount.value = memberAccount;
-                console.log('放圖片')
                 avatarpreview.src = `http://localhost:8080/hibernate_war/DBGifReaderController?memberNo=${memberNo}`;
-                if(memberPic4json){
+                if (memberPic4json) {
                     avatarPreview.style.display = "block";
                     avatarPlaceholder.style.display = "none";
-                }else {
+                } else {
                     avatarPreview.style.display = "none";
                     avatarPlaceholder.style.display = "block";
                 }
@@ -178,19 +185,26 @@
         //     return;
         // }
 
-        const memberCardLength = inputmemberCard.value.length;
-        if(memberCardLength != 0){
+        const memberCarda = inputmemberCard.value;
+        if (memberCarda != 0) {
             if (memberCardLength < 15 || memberCardLength > 19) {
                 msg.textContent = '信用卡長度須介於15~19碼';
                 return;
             }
         }
+       const Birthday= inputmemberBirthday.value;
+        if (!Birthday) {
+            msg.textContent = '生日為必填';
+            return;
+        }
 
-        let membergender = inputmemberGender.value;
-        if (membergender ==="男生") {
-            membergender=1;
-        }else if(membergender ==="女生"){
-            membergender=2;
+        let membergender = 0;
+        if (inputmemberGender.value) {
+            if (inputmemberGender.value === "男生") {
+                membergender = 1;
+            } else if (inputmemberGender.value === "女生") {
+                membergender = 2;
+            }
         }
         // 檢查結束
 

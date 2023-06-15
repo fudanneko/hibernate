@@ -26,7 +26,7 @@ public class MemberData extends Core {
     private String memberName;
 
     @Builder.Default
-    @Column(name = "memberGender", nullable = false, insertable = false)
+    @Column(name = "memberGender")
     private Byte memberGender = null;
 
     @Column(name = "memberPassword", nullable = false, length = 20)
@@ -38,16 +38,14 @@ public class MemberData extends Core {
     @Column(name = "memberEmail", nullable = false, length = 40)
     private String memberEmail;
 
-    @Builder.Default
     @Column(name = "memberAddress", length = 100, insertable = false)
-    private String memberAddress = null;
+    private String memberAddress ;
 
     @Column(name = "memberJoinTime", nullable = false, insertable = false, updatable = false)
     private Timestamp memberJoinTime;
 
-    @Builder.Default
     @Column(name = "memberBirthday", insertable = false)
-    private Timestamp memberBirthday = null;
+    private Timestamp memberBirthday ;
 
     @Builder.Default
     @Column(name = "memberNation", length = 10, updatable = false)
